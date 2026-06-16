@@ -9,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.Backend.repository.*;
 import org.springframework.stereotype.Service;
 
+import com.Backend.Ecxeptions.UserNotFoundException;
+import com.Backend.Ecxeptions.WrongPasswordException;
 import com.Backend.JWT_Token.JWT_Token_Generation;
 import com.Backend.Tables.UserDetails;
 
@@ -28,7 +30,7 @@ public class LoginService {
 		Optional<UserDetails> t= repo.findByEmail(ud.getEmail());
 		
 	    if (t.isEmpty()) {
-	        return "User Not Found";
+	        throw new UserNotFoundException("User Not Found");
 	    }else {
 		     UserDetails g=t.get();
 		     boolean isValid=pe.matches(ud.getPassword(), g.getPassword());
@@ -37,7 +39,7 @@ public class LoginService {
 		        	 String token=jwttoken.generateToken(g.getEmail());
 			          return token;
 		         }else {
-		        	 return "User Password Wrong";
+		        	throw new WrongPasswordException("Wrong Password");
 		         }
 
 	}

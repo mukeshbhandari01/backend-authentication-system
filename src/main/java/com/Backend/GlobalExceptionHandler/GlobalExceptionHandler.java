@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 
 import com.Backend.Ecxeptions.UserAlreadyExistException;
+import com.Backend.Ecxeptions.UserNotFoundException;
+import com.Backend.Ecxeptions.WrongPasswordException;
 import com.Backend.ErorrResponseClass.ErorrResponse;
 
 @RestControllerAdvice
@@ -18,6 +20,21 @@ public class GlobalExceptionHandler {
 		ErorrResponse erorr=new ErorrResponse(ex.getMessage(),HttpStatus.CONFLICT.value());
 		 return new ResponseEntity<>(erorr, HttpStatus.CONFLICT);
 	}
+	
+	@ExceptionHandler(UserNotFoundException.class)
+	public ResponseEntity<ErorrResponse> handle(UserNotFoundException ex){
+		ErorrResponse erorr=new ErorrResponse(ex.getMessage(),HttpStatus.CONFLICT.value());
+		return new ResponseEntity<>(erorr,HttpStatus.CONFLICT);
+		
+	}
+	
+	@ExceptionHandler(WrongPasswordException.class)
+	public ResponseEntity<ErorrResponse> handle(WrongPasswordException ex){
+		ErorrResponse erorr=new ErorrResponse(ex.getMessage(),HttpStatus.CONFLICT.value());
+		return new ResponseEntity<>(erorr,HttpStatus.CONFLICT);
+		
+	}
+	
 	
 
 }

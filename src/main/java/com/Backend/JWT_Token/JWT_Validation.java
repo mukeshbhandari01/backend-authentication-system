@@ -64,5 +64,4 @@ public class JWT_Validation extends OncePerRequestFilter{
       filterChain.doFilter(request,response);
 		
 	}
-
 }
